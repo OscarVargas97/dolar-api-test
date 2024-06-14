@@ -23,7 +23,7 @@ class DollarsController extends Controller
         $data = $this->getCheckData(function() { return Dollar::all(); });
         return response()->json($data);
     }
-    //Refactoring: Este código debe ir en un archivo utilidades
+    //Refactoring: Este código debe ir en un archivo utilidades o en un middleware, tengo que evaluarlo
     private function getCheckData(callable $modelQueryFunction){
 
         $result = ['data'=>null, 'message'=>'no data found', 'status'=>200];
