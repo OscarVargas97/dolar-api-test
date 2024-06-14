@@ -3,11 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+#start_date=YYYY-MM-DD&end_date=YYYY-MM-DD
 
-
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/dollar-values', function () {
+    return 'Hello World';
 });
