@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dollar extends Model
+class DollarValue extends Model
 {
     use HasFactory;
-    protected $table = 'dollars';
-    protected $fillable = ['date'];
+
+    protected $table = 'dollars_values';
+
+    protected $fillable = ['value', 'dollar_id'];
+
     public $timestamps = false;
 }
