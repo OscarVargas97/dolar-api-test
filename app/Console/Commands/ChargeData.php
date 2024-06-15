@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Services\DollarService;
 use App\Services\ApiDollarService;
+use DateTime;
 
 class ChargeData extends Command
 {
@@ -14,9 +15,6 @@ class ChargeData extends Command
      * @var string
      */
     protected $signature = 'app:charge-data';
-
-    
-    
     /**
      * The console command description.
      *
@@ -34,9 +32,14 @@ class ChargeData extends Command
 
     public function handle()
     {
-        $data = ApiDollarService::getAllDolar();
-        $alias = $data['unidad_medida'];
-        $this->dollarService->postFromDollarApi($data['serie'], $alias);
+        $currentYear = (new DateTime())->format('Y');
+        $lastYear = (new DateTime('-1 year'))->format('Y');
+        $years = [$lastYear, $currentYear];
+        foreach ($years as $year) {
+            $data = ApiDollarService::getApi('dolar/'. $year);
+            $this->dollarService->postFromDollarApi($data['serie'], $data['unidad_medida']);
+            echo('Datos del año '. $year .' cargados correctamente' . PHP_EOL);
+        }
     }
 }
 

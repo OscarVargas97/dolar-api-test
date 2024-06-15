@@ -33,6 +33,8 @@ class DollarsController extends Controller
         } catch (\Exception $e) {
             return $this->respondWithError('An unexpected error occurred', 500);
         }
+        //No hare el crud, ya que no se solicito, pero con los métodos creados en DollarService se puede hacer.
+        //Aun que faltan algunas partes.
     }
 }
 

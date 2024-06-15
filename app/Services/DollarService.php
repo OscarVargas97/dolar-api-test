@@ -6,14 +6,14 @@ use App\Models\CurrencyAlias;
 use App\Models\Dollars;
 use Carbon\Carbon;
 use Exception;
+
 class DollarService
 {
     public function getDollars($startDate = null, $endDate = null)
     {
         $query = Dollars::query()
-            ->join('dollars_values', 'dollars.value_id', '=', 'dollars_values.id')
-            ->join('currency_types', 'dollars_values.type_id', '=', 'currency_types.id')
-            ->select('dollars.id', 'dollars.date', 'dollars_values.value', 'currency_types.name');
+            ->join('currency_types', 'dollars.type_id', '=', 'currency_types.id')
+            ->select('dollars.id', 'dollars.date', 'dollars.value', 'currency_types.name');
         if ($startDate && $endDate) {
             $query->whereBetween('date', [$startDate, $endDate]);
         }
@@ -30,11 +30,13 @@ class DollarService
             throw new \RuntimeException('Error 404: Currency alias not found', 404);
         }
         try {
-            Dollars::create([
-                'date' => Carbon::parse($date),
-                'value' => $value,
-                'type_id' => $currencyAlias->currency_type_id
-            ]);
+            Dollars::firstOrCreate(
+                ['date' => Carbon::parse($date)],
+                [
+                    'value' => $value,
+                    'type_id' => $currencyAlias->currency_type_id
+                ]
+            );
         } catch (Exception $e) {
             throw new \RuntimeException('Error 500: oops something went wrong', 500);
         }
@@ -47,7 +49,6 @@ class DollarService
     {
         $response = [];
         foreach ($data as $dollar) {
-            print_r($dollar);
             $response[] = $this->postDollars($alias, $dollar['fecha'], $dollar['valor']);
         }
         return $response;
