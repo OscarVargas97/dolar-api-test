@@ -15,12 +15,13 @@ class ApiDollarService
     public static function getByDates(int $year)
     {
         $url = env('API_DOLLAR_URL') . 'dolar/'.'year';
-        $erro_response = 'Error fetching rates for year ' . $year;
-        return self::getApi($url,$erro_response);
+        $params = ['year' => $year];
+        $erro_response = 'Error fetching rates for year ';
+        return self::getApi($url,$erro_response, $params);
     }
-    private static function getApi(string $url, $erro_response): Array
+    private static function getApi(string $url, string $erro_response, array $params=[]): Array
     {
-        $response = Http::get($url);
+        $response = Http::get($url,$params);
         if ($response->successful()) {
             return $response->json();
         } else {

@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Dollar extends Model
+class Dollars extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['date', 'dollar_value'];
+    protected $fillable = ['date', 'value_id'];
 
     public function dollarValue()
     {
-        return $this->belongsTo(DollarValue::class, 'dollar_value');
+        return $this->belongsTo(DollarsValues::class, 'value_id');
     }
 }

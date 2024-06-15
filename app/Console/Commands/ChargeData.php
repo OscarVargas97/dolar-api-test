@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Services\DollarService;
+use App\Services\ApiDollarService;
 
 class ChargeData extends Command
 {
@@ -33,7 +34,9 @@ class ChargeData extends Command
 
     public function handle()
     {
-        $this->dollarService->postDollars();
+        $data = ApiDollarService::getAllDolar();
+        $alias = $data['unidad_medida'];
+        $this->dollarService->postFromDollarApi($data['serie'], $alias);
     }
 }
 

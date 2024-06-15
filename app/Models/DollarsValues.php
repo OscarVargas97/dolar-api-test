@@ -4,7 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DollarValue extends Model
+class DollarsValues extends Model
 {
     use HasFactory;
 
@@ -17,6 +17,6 @@ class DollarValue extends Model
 
     public function dollars()
     {
-        return $this->hasMany(Dollar::class, 'dollar_value');
+        return $this->hasMany(Dollars::class, 'value_id');
     }
 }
