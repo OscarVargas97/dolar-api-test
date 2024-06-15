@@ -26,7 +26,6 @@ class DollarService
             throw new \RuntimeException('Error 500: oops something went wrong', 500);
         }
     }
-
     public function postDollars($alias, $date, $value): array
     {
         $currencyAlias = CurrencyAlias::where('alias', $alias)->first();
@@ -52,6 +51,8 @@ class DollarService
 
         return ['message' => 'Dollar and its value have been created successfully'];
     }
+    #Este método es poco eficiente, no alcanzo a estudiar sobre volcado de datos masivos en Laravel.
+    #Esto en Django se hace con bulk_create
     public function postFromDollarApi($data, $alias): array
     {
         $response = [];
@@ -59,49 +60,6 @@ class DollarService
             print_r($dollar);
             $response[] = $this->postDollars($alias, $dollar['fecha'], $dollar['valor']);
         }
-        return $response;
-    }
-
-    public function postMultiDollarsTwo(array $data): array
-    {
-        $response  = [];
-        DB::beginTransaction();
-        try {
-            $dollarValuesData = [];
-            $dollarsData = [];
-            foreach ($data as $dollar) {
-                $currencyAlias = CurrencyAlias::where('alias', $dollar['alias'])->first();
-                if (!$currencyAlias) {
-                    throw new \RuntimeException('Error 404: Currency alias not found', 404);
-                }
-                $dollarValuesData[] = [
-                    'value' => $dollar['value'],
-                    'type_id' => $currencyAlias->currencyType->id
-                ];
-            }
-
-            // Insertar valores de dólares y obtener sus IDs
-            $dollarValues = DollarsValues::insert($dollarValuesData);
-
-            // Crear datos para la inserción de dólares
-            foreach ($dollarValues as $index => $dollarValue) {
-                $dollarsData[] = [
-                    'date' => Carbon::parse($data[$index]['date']),
-                    'value_id' => $dollarValue->id,
-                ];
-
-                $response[] = ['message' => 'Dollar and its value have been created successfully'];
-            }
-
-            // Insertar dólares
-            Dollars::insert($dollarsData);
-
-            DB::commit();
-        } catch (Exception $e) {
-            DB::rollBack();
-            throw new \RuntimeException('Error 500: oops something went wrong', 500);
-        }
-
         return $response;
     }
 }
