@@ -4,11 +4,8 @@ namespace App\Services;
 
 use App\Models\CurrencyAlias;
 use App\Models\Dollars;
-use App\Models\DollarsValues;
 use Carbon\Carbon;
 use Exception;
-use Illuminate\Support\Facades\DB;
-
 class DollarService
 {
     public function getDollars($startDate = null, $endDate = null)
@@ -33,17 +30,10 @@ class DollarService
             throw new \RuntimeException('Error 404: Currency alias not found', 404);
         }
         try {
-            $dollarsValue = DollarsValues::create([
-                'value' => $value,
-                'type_id' => $currencyAlias->currencyType->id
-            ]);
-        } catch (Exception $e) {
-            throw new \RuntimeException('Error 500: oops something went wrong', 500);
-        }
-        try {
             Dollars::create([
                 'date' => Carbon::parse($date),
-                'value_id' => $dollarsValue->id, // Asegurarse de usar la columna correcta
+                'value' => $value,
+                'type_id' => $currencyAlias->currency_type_id
             ]);
         } catch (Exception $e) {
             throw new \RuntimeException('Error 500: oops something went wrong', 500);

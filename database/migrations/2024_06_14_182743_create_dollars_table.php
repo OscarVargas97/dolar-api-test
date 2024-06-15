@@ -23,16 +23,11 @@ return new class extends Migration
             $table->foreignId('currency_type_id')->constrained('currency_types')->cascadeOnDelete();
             $table->timestamps();
         });
-        Schema::create('dollars_values', function (Blueprint $table) {
-            $table->id();
-            $table->decimal('value', 8, 2);
-            $table->foreignId('type_id')->constrained('currency_types')->cascadeOnDelete()->nullable(false);
-            $table->timestamps();
-        });
         Schema::create('dollars', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('date');
-            $table->foreignId('value_id')->constrained('dollars_values')->cascadeOnDelete()->nullable(false);
+            $table->dateTime('date')->nullable(false)->unique();
+            $table->decimal('value', 8, 2);
+            $table->foreignId('type_id')->constrained('currency_types')->cascadeOnDelete()->nullable(false);
             $table->timestamps();
         });
     }
