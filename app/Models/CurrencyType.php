@@ -15,4 +15,9 @@ class CurrencyType extends Model
     {
         return $this->hasMany(CurrencyAlias::class);
     }
+
+    public function dollarValues()
+    {
+        return $this->hasMany(DollarValue::class, 'type_id');
+    }
 }

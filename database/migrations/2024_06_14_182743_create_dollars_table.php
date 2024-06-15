@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('currency_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->unique();
-            $table->timestamps();
+                $table->id();
+                $table->string('name')->unique();
+                $table->timestamps();
         });
 
         Schema::create('currency_aliases', function (Blueprint $table) {
@@ -23,17 +23,16 @@ return new class extends Migration
             $table->foreignId('currency_type_id')->constrained('currency_types')->cascadeOnDelete();
             $table->timestamps();
         });
-
-        Schema::create('dollars', function (Blueprint $table) {
-            $table->id();
-            $table->dateTime('date');
-            $table->timestamps();
-        });
-
         Schema::create('dollars_values', function (Blueprint $table) {
             $table->id();
             $table->decimal('value', 8, 2);
-            $table->foreignId('dollar_id')->constrained()->cascadeOnDelete()->nullable(false);
+            $table->foreignId('type_id')->constrained('currency_types')->cascadeOnDelete()->nullable(false);
+            $table->timestamps();
+        });
+        Schema::create('dollars', function (Blueprint $table) {
+            $table->id();
+            $table->dateTime('date');
+            $table->foreignId('value_id')->constrained('dollars_values')->cascadeOnDelete()->nullable(false);
             $table->timestamps();
         });
     }

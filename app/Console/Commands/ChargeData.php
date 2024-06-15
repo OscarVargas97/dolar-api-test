@@ -2,18 +2,20 @@
 
 namespace App\Console\Commands;
 
-use App\Services\ApiDollarService;
 use Illuminate\Console\Command;
+use App\Services\DollarService;
 
 class ChargeData extends Command
 {
-    /**
+        /**
      * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'app:charge-data';
 
+    
+    
     /**
      * The console command description.
      *
@@ -21,11 +23,17 @@ class ChargeData extends Command
      */
     protected $description = 'Command description';
 
-    /**
-     * Execute the console command.
-     */
+    protected $dollarService;
+
+    public function __construct(DollarService $dollarService)
+    {
+        parent::__construct();
+        $this->dollarService = $dollarService;
+    }
+
     public function handle()
     {
-        $this->info(ApiDollarService::getAllDolar());
+        $this->dollarService->postDollars();
     }
 }
+

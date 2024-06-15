@@ -8,7 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Dollar extends Model
 {
     use HasFactory;
-    protected $table = 'dollars';
-    protected $fillable = ['date'];
-    public $timestamps = false;
+
+    protected $fillable = ['date', 'dollar_value'];
+
+    public function dollarValue()
+    {
+        return $this->belongsTo(DollarValue::class, 'dollar_value');
+    }
 }

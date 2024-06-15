@@ -8,9 +8,15 @@ class DollarValue extends Model
 {
     use HasFactory;
 
-    protected $table = 'dollars_values';
+    protected $fillable = ['value', 'type_id'];
 
-    protected $fillable = ['value', 'dollar_id'];
+    public function currencyType()
+    {
+        return $this->belongsTo(CurrencyType::class, 'type_id');
+    }
 
-    public $timestamps = false;
+    public function dollars()
+    {
+        return $this->hasMany(Dollar::class, 'dollar_value');
+    }
 }
