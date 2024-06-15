@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\ApiDollarService;
 use Illuminate\Console\Command;
 
 class ChargeData extends Command
@@ -25,6 +26,6 @@ class ChargeData extends Command
      */
     public function handle()
     {
-        $this->info("Test");
+        $this->info(ApiDollarService::getAllDolar());
     }
 }
