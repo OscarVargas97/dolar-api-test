@@ -7,6 +7,11 @@ use App\Models\CurrencyType;
 
 class CurrencyTypeSeeder extends Seeder
 {
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
     public function run(): void
     {
         $currencyTypes = [

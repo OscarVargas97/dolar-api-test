@@ -8,7 +8,12 @@ use App\Models\CurrencyType;
 
 class CurrencyAliasSeeder extends Seeder
 {
-    public function run(): void
+    /**
+     * Run the database seeds.
+     *
+     * @return void
+     */
+    public function run()
     {
         $currencyAliases = [
             ['alias' => 'Pesos', 'currency_type_id' => CurrencyType::where('name', 'CLP')->first()->id],
