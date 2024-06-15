@@ -3,10 +3,9 @@ namespace App\Http\Api\Controllers;
 
 use App\Http\Api\Requests\DollarRequest;
 use App\Services\DollarService;
+use App\Traits\ResponseTrait;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\JsonResponse;
-use App\Traits\ResponseTrait;
-
 
 
 class DollarsController extends Controller
