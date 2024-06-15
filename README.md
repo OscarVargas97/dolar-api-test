@@ -64,3 +64,18 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+## Observación
+Es posible que si quieren revisar la ejecución de los comandos automáticos, no lo encuentren en Kernel.php, ya que como lo indica la [documentacion](https://laravel.com/docs/11.x/releases) de laravel 11:
+
+```
+Scheduling
+Using a new Schedule facade, scheduled tasks may now be defined directly in your application's routes/console.php file, eliminating the need for a separate console "kernel" class:
+```
+```php
+use Illuminate\Support\Facades\Schedule;
+ 
+Schedule::command('emails:send')->daily();
+```
