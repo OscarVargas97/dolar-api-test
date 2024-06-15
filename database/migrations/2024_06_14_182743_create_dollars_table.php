@@ -11,6 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('currency_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name')->unique();
+            $table->timestamps();
+        });
+
+        Schema::create('currency_aliases', function (Blueprint $table) {
+            $table->id();
+            $table->string('alias')->unique();
+            $table->foreignId('currency_type_id')->constrained('currency_types')->cascadeOnDelete();
+            $table->timestamps();
+        });
+
         Schema::create('dollars', function (Blueprint $table) {
             $table->id();
             $table->dateTime('date');
