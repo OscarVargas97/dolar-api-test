@@ -28,6 +28,9 @@ COPY . .
 # Instala las dependencias de PHP
 RUN composer install --no-dev --optimize-autoloader
 
+# Optimiza la autoload de Composer
+RUN composer dump-autoload
+
 # Expone el puerto que usará php artisan serve
 EXPOSE 8000
 
